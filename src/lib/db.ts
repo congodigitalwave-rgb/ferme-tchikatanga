@@ -61,6 +61,18 @@ export interface Expense {
   synced: number;
 }
 
+export interface Employee {
+  id?: number;
+  name: string;
+  role: string;
+  phone: string;
+  email: string;
+  photo?: string;
+  hiringDate: string;
+  status: 'Actif' | 'Inactif';
+  synced: number;
+}
+
 export class AppDatabase extends Dexie {
   workerAttendance!: Table<WorkerAttendance>;
   weeklyReports!: Table<WeeklyReport>;
@@ -68,16 +80,18 @@ export class AppDatabase extends Dexie {
   tasks!: Table<Task>;
   trainings!: Table<Training>;
   expenses!: Table<Expense>;
+  employees!: Table<Employee>;
 
   constructor() {
     super('FermeTchikatangaDB');
-    this.version(2).stores({
+    this.version(3).stores({
       workerAttendance: '++id, date, synced',
       weeklyReports: '++id, date, synced',
       materials: '++id, status, synced',
       tasks: '++id, startDate, endDate, synced',
       trainings: '++id, date, synced',
-      expenses: '++id, date, category, synced'
+      expenses: '++id, date, category, synced',
+      employees: '++id, name, role, status, synced'
     });
   }
 }

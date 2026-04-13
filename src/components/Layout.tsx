@@ -13,7 +13,8 @@ import {
   Sprout,
   Wifi,
   WifiOff,
-  RefreshCw
+  RefreshCw,
+  UsersRound
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -29,6 +30,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { id: 'dashboard', label: 'Tableau de Bord', icon: LayoutDashboard },
+  { id: 'personnel', label: 'Personnel', icon: UsersRound },
   { id: 'tracking', label: 'Suivi Quotidien', icon: Users },
   { id: 'reports', label: 'Rapports Hebdo', icon: FileText },
   { id: 'material', label: 'Gestion Matériel', icon: Wrench },

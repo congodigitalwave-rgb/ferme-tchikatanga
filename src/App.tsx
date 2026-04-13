@@ -9,6 +9,7 @@ import MaterialManagement from '@/components/MaterialManagement';
 import Planning from '@/components/Planning';
 import Training from '@/components/Training';
 import Expenses from '@/components/Expenses';
+import Personnel from '@/components/Personnel';
 import { Toaster } from '@/components/ui/sonner';
 import { Button } from '@/components/ui/button';
 import { db } from '@/lib/db';
@@ -96,6 +97,12 @@ function AppContent() {
           { category: 'Matériel', amount: 150000, date: today, synced: 0 },
           { category: 'Main d\'œuvre', amount: 75000, date: today, synced: 0 }
         ]);
+
+        await db.employees.bulkAdd([
+          { name: 'Jean Mukendi', role: 'Chef de culture', phone: '+243 812 345 678', email: 'jean.m@ferme.com', hiringDate: '2023-01-15', status: 'Actif', synced: 0 },
+          { name: 'Marie Kabange', role: 'Responsable Elevage', phone: '+243 822 345 678', email: 'marie.k@ferme.com', hiringDate: '2023-03-10', status: 'Actif', synced: 0 },
+          { name: 'Paul Tshilombo', role: 'Mécanicien Agricole', phone: '+243 852 345 678', email: 'paul.t@ferme.com', hiringDate: '2023-06-20', status: 'Actif', synced: 0 }
+        ]);
       }
     };
 
@@ -147,6 +154,7 @@ function AppContent() {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard': return <Dashboard />;
+      case 'personnel': return <Personnel />;
       case 'tracking': return <DailyTracking />;
       case 'reports': return <WeeklyReports />;
       case 'material': return <MaterialManagement />;
