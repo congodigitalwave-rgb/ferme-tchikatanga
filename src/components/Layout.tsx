@@ -14,7 +14,8 @@ import {
   Wifi,
   WifiOff,
   RefreshCw,
-  UsersRound
+  UsersRound,
+  Lock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -126,6 +127,22 @@ export default function Layout({ children, activeTab, setActiveTab, isDemo, onEx
               </button>
             )}
           </div>
+          
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-slate-600 hover:text-green-700 hover:bg-green-50 gap-3"
+            onClick={async () => {
+              const newPass = prompt('Entrez votre nouveau mot de passe :');
+              if (newPass) {
+                const { error } = await supabase.auth.updateUser({ password: newPass });
+                if (error) toast.error(error.message);
+                else toast.success('Mot de passe mis à jour !');
+              }
+            }}
+          >
+            <Lock className="h-5 w-5" />
+            Changer le mot de passe
+          </Button>
           
           <Button 
             variant="ghost" 

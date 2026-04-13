@@ -91,13 +91,32 @@ export default function Auth() {
             >
               {loading ? 'Chargement...' : isSignUp ? "S'inscrire" : 'Se connecter'}
             </Button>
-            <button
-              type="button"
-              className="text-sm text-green-700 hover:underline"
-              onClick={() => setIsSignUp(!isSignUp)}
-            >
-              {isSignUp ? 'Déjà un compte ? Connectez-vous' : "Pas encore de compte ? S'inscrire"}
-            </button>
+            <div className="flex flex-col space-y-2 items-center">
+              <button
+                type="button"
+                className="text-sm text-green-700 hover:underline"
+                onClick={() => setIsSignUp(!isSignUp)}
+              >
+                {isSignUp ? 'Déjà un compte ? Connectez-vous' : "Pas encore de compte ? S'inscrire"}
+              </button>
+              {!isSignUp && (
+                <button
+                  type="button"
+                  className="text-xs text-slate-500 hover:text-green-700 transition-colors"
+                  onClick={async () => {
+                    if (!email) {
+                      toast.error('Veuillez entrer votre email d\'abord');
+                      return;
+                    }
+                    const { error } = await supabase.auth.resetPasswordForEmail(email);
+                    if (error) toast.error(error.message);
+                    else toast.success('Email de réinitialisation envoyé !');
+                  }}
+                >
+                  Mot de passe oublié ?
+                </button>
+              )}
+            </div>
           </CardFooter>
         </form>
       </Card>

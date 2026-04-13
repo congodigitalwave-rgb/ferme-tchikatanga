@@ -21,13 +21,24 @@ export function useSync() {
 
   const syncData = async () => {
     if (!isOnline || syncing || !supabase) return;
+    
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
     setSyncing(true);
 
     try {
       // Sync Worker Attendance
       const unsyncedAttendance = await db.workerAttendance.where('synced').equals(0).toArray();
       for (const item of unsyncedAttendance) {
-        const { id, synced, ...data } = item;
+        const { id, synced, workerName, arrivalTime, departureTime, ...rest } = item;
+        const data = {
+          ...rest,
+          worker_name: workerName,
+          arrival_time: arrivalTime,
+          departure_time: departureTime,
+          user_id: user.id
+        };
         const { error } = await supabase.from('worker_attendance').insert(data);
         if (!error) await db.workerAttendance.update(id!, { synced: 1 });
       }
@@ -35,7 +46,13 @@ export function useSync() {
       // Sync Weekly Reports
       const unsyncedReports = await db.weeklyReports.where('synced').equals(0).toArray();
       for (const item of unsyncedReports) {
-        const { id, synced, ...data } = item;
+        const { id, synced, zoneProgress, tasksAccomplished, ...rest } = item;
+        const data = {
+          ...rest,
+          zone_progress: zoneProgress,
+          tasks_accomplished: tasksAccomplished,
+          user_id: user.id
+        };
         const { error } = await supabase.from('weekly_reports').insert(data);
         if (!error) await db.weeklyReports.update(id!, { synced: 1 });
       }
@@ -43,7 +60,14 @@ export function useSync() {
       // Sync Materials
       const unsyncedMaterials = await db.materials.where('synced').equals(0).toArray();
       for (const item of unsyncedMaterials) {
-        const { id, synced, ...data } = item;
+        const { id, synced, serialNumber, lastMaintenance, nextMaintenance, ...rest } = item;
+        const data = {
+          ...rest,
+          serial_number: serialNumber,
+          last_maintenance: lastMaintenance,
+          next_maintenance: nextMaintenance,
+          user_id: user.id
+        };
         const { error } = await supabase.from('materials').insert(data);
         if (!error) await db.materials.update(id!, { synced: 1 });
       }
@@ -51,7 +75,14 @@ export function useSync() {
       // Sync Tasks
       const unsyncedTasks = await db.tasks.where('synced').equals(0).toArray();
       for (const item of unsyncedTasks) {
-        const { id, synced, ...data } = item;
+        const { id, synced, assignedTo, startDate, endDate, ...rest } = item;
+        const data = {
+          ...rest,
+          assigned_to: assignedTo,
+          start_date: startDate,
+          end_date: endDate,
+          user_id: user.id
+        };
         const { error } = await supabase.from('tasks').insert(data);
         if (!error) await db.tasks.update(id!, { synced: 1 });
       }
@@ -59,7 +90,11 @@ export function useSync() {
       // Sync Trainings
       const unsyncedTrainings = await db.trainings.where('synced').equals(0).toArray();
       for (const item of unsyncedTrainings) {
-        const { id, synced, ...data } = item;
+        const { id, synced, ...rest } = item;
+        const data = {
+          ...rest,
+          user_id: user.id
+        };
         const { error } = await supabase.from('trainings').insert(data);
         if (!error) await db.trainings.update(id!, { synced: 1 });
       }
@@ -67,9 +102,27 @@ export function useSync() {
       // Sync Expenses
       const unsyncedExpenses = await db.expenses.where('synced').equals(0).toArray();
       for (const item of unsyncedExpenses) {
-        const { id, synced, ...data } = item;
+        const { id, synced, justificationPhoto, ...rest } = item;
+        const data = {
+          ...rest,
+          justification_photo: justificationPhoto,
+          user_id: user.id
+        };
         const { error } = await supabase.from('expenses').insert(data);
         if (!error) await db.expenses.update(id!, { synced: 1 });
+      }
+
+      // Sync Employees
+      const unsyncedEmployees = await db.employees.where('synced').equals(0).toArray();
+      for (const item of unsyncedEmployees) {
+        const { id, synced, hiringDate, ...rest } = item;
+        const data = {
+          ...rest,
+          hiring_date: hiringDate,
+          user_id: user.id
+        };
+        const { error } = await supabase.from('employees').insert(data);
+        if (!error) await db.employees.update(id!, { synced: 1 });
       }
 
     } catch (error) {
