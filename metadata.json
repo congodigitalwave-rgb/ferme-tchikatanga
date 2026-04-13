@@ -1,0 +1,6 @@
+{
+  "name": "Ferme Tchikatanga",
+  "description": "Application de gestion agroforestière pour la Ferme Tchikatanga au Congo.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": []
+}
