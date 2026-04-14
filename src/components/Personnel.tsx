@@ -94,11 +94,9 @@ export default function Personnel() {
           <p className="text-green-700">Gérez les informations et les coordonnées de vos employés</p>
         </div>
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2 bg-green-600 hover:bg-green-700">
-              <UserPlus className="h-4 w-4" />
-              Ajouter un Employé
-            </Button>
+          <DialogTrigger render={<Button className="gap-2 bg-green-600 hover:bg-green-700" />}>
+            <UserPlus className="h-4 w-4" />
+            Ajouter un Employé
           </DialogTrigger>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>

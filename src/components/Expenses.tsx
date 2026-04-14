@@ -81,11 +81,9 @@ export default function Expenses() {
           <p className="text-green-700">Suivi du budget et des coûts opérationnels</p>
         </div>
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2 bg-green-600 hover:bg-green-700">
-              <Plus className="h-4 w-4" />
-              Nouvelle Dépense
-            </Button>
+          <DialogTrigger render={<Button className="gap-2 bg-green-600 hover:bg-green-700" />}>
+            <Plus className="h-4 w-4" />
+            Nouvelle Dépense
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>

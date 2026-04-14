@@ -171,10 +171,8 @@ export default function Layout({ children, activeTab, setActiveTab, isDemo, onEx
             <WifiOff className="h-4 w-4 text-red-500" />
           )}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-green-700">
-                <Menu className="h-6 w-6" />
-              </Button>
+            <SheetTrigger render={<Button variant="ghost" size="icon" className="text-green-700" />}>
+              <Menu className="h-6 w-6" />
             </SheetTrigger>
             <SheetContent side="left" className="w-72 p-0 border-r-green-100">
               <div className="p-6 border-b border-green-50 flex items-center justify-between">

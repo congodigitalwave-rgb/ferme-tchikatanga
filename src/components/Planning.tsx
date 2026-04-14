@@ -237,11 +237,9 @@ export default function Planning() {
             </Button>
           </div>
           <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-            <DialogTrigger asChild>
-              <Button className="gap-2 bg-green-600 hover:bg-green-700 flex-1 sm:flex-none">
-                <Plus className="h-4 w-4" />
-                Nouvelle Tâche
-              </Button>
+            <DialogTrigger render={<Button className="gap-2 bg-green-600 hover:bg-green-700 flex-1 sm:flex-none" />}>
+              <Plus className="h-4 w-4" />
+              Nouvelle Tâche
             </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>

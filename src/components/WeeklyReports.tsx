@@ -54,11 +54,9 @@ export default function WeeklyReports() {
           <p className="text-green-700">Suivi de l'avancement et planification</p>
         </div>
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2 bg-green-600 hover:bg-green-700">
-              <Plus className="h-4 w-4" />
-              Nouveau Rapport
-            </Button>
+          <DialogTrigger render={<Button className="gap-2 bg-green-600 hover:bg-green-700" />}>
+            <Plus className="h-4 w-4" />
+            Nouveau Rapport
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
             <DialogHeader>

@@ -9,6 +9,9 @@ export const isSupabaseConfigured = Boolean(isUrlValid && supabaseAnonKey);
 // Create a dummy client if keys are missing to avoid crashing on load
 export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
+      global: {
+        fetch: (url, options) => fetch(url, options),
+      },
       auth: {
         persistSession: true,
         autoRefreshToken: true,
